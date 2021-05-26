@@ -21,6 +21,7 @@ class ExceptionHandlerServerInterceptor : MethodInterceptor<Any, Any> {
             val error = when (e) {
                 is ConstraintViolationException -> Status.INVALID_ARGUMENT.withDescription(e.message).asRuntimeException()
                 is IllegalStateException -> Status.FAILED_PRECONDITION.withDescription(e.message).asRuntimeException()
+                is LivroNaoEncontradoException -> Status.NOT_FOUND.withDescription(e.message).asRuntimeException()
                 else -> Status.UNKNOWN.withDescription("Erro inesperado: ${e.message}").asRuntimeException()
 
             }

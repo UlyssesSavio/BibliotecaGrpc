@@ -10,3 +10,5 @@ datasources:
     schema-generate: CREATE_DROP
     dialect: H2
 jpa.default.properties.hibernate.hbm2ddl.auto: update
+
+

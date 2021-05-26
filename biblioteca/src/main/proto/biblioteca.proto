@@ -11,7 +11,18 @@ package com.livraria;
 
 service BibliotecaService {
   rpc cadastraLivro (BibliotecaRequest) returns (BibliotecaResponse) {}
+  rpc buscaLivro (BibliotecaBuscaRequest) returns (BibliotecaResponse){}
+  rpc deletaLivro(BibliotecaBuscaRequest) returns (BibliotecaDeletaResponse){}
 }
+
+message BibliotecaDeletaResponse{
+  string isbn=1;
+}
+
+message BibliotecaBuscaRequest{
+  string ibsn=1;
+}
+
 
 message BibliotecaRequest {
   string nome = 1;
