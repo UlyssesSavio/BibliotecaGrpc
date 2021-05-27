@@ -2,6 +2,7 @@ package com.livraria.model
 
 import com.google.protobuf.Timestamp
 import com.livraria.BibliotecaResponse
+import io.micronaut.core.annotation.Introspected
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 @Entity
+@Introspected
 class Livro(@field:NotBlank val nome:String,
             @field:NotBlank val descricao:String,
             @field:NotNull val preco:Double,

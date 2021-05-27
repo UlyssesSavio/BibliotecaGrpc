@@ -36,7 +36,7 @@ internal class LivroEndPointTest(val repository: LivroRepository){
     @Test
     fun `deve cadastrar um livro`(){
 
-        val livroRequest = geraLivroRequest("nome teste")
+        val livroRequest = geraLivroRequest("nome teste", "teste", 20.0)
         val response = grpc.cadastraLivro(livroRequest)
 
         with(response){
@@ -49,9 +49,9 @@ internal class LivroEndPointTest(val repository: LivroRepository){
     }
 
     @Test
-    fun `nao deve cadastrar um livro`(){
+    fun `nao deve cadastrar um livro nome invalido`(){
 
-        val livroRequest = geraLivroRequest("")
+        val livroRequest = geraLivroRequest("","descricao", 20.0)
 
         Assertions.assertThrows(StatusRuntimeException::class.java) {
             grpc.cadastraLivro(livroRequest)
@@ -59,9 +59,22 @@ internal class LivroEndPointTest(val repository: LivroRepository){
     }
 
     @Test
+    fun `nao deve cadastrar um livro descricao invalida`(){
+
+        val livroRequest = geraLivroRequest("tenho um nome","", 20.0)
+
+        Assertions.assertThrows(StatusRuntimeException::class.java) {
+            grpc.cadastraLivro(livroRequest)
+        }
+    }
+
+
+
+
+    @Test
     fun `deve buscar um livro`(){
 
-        val livroRequest = geraLivroRequest("livro buscado")
+        val livroRequest = geraLivroRequest("livro buscado", "descricao", 20.0)
         val livro = livroRequest.toModel()
         repository.save(livro)
 
@@ -88,7 +101,7 @@ internal class LivroEndPointTest(val repository: LivroRepository){
 
     @Test
     fun `deve deletar um livro`(){
-        val livroRequest = geraLivroRequest("livro buscado")
+        val livroRequest = geraLivroRequest("livro buscado","descricao",20.0)
         val livro = livroRequest.toModel()
         repository.save(livro)
 
@@ -115,12 +128,12 @@ internal class LivroEndPointTest(val repository: LivroRepository){
     }
 
 
-    fun geraLivroRequest(nome: String): BibliotecaRequest {
+    fun geraLivroRequest(nome: String, descricao: String, preco:Double): BibliotecaRequest {
         return BibliotecaRequest.newBuilder()
                 .setDataLancamento(Timestamp.newBuilder().setSeconds(1).setSeconds(1L).build())
                 .setNome(nome)
-                .setDescricao("descricao teste")
-                .setPreco(20.0)
+                .setDescricao(descricao)
+                .setPreco(preco)
                 .build()
     }
 

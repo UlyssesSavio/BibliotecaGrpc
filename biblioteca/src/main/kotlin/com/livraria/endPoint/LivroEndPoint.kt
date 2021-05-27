@@ -14,7 +14,6 @@ import javax.inject.Singleton
 class LivroEndPoint(val repository:LivroRepository): BibliotecaServiceGrpc.BibliotecaServiceImplBase() {
     override fun cadastraLivro(request: BibliotecaRequest, responseObserver: StreamObserver<BibliotecaResponse>) {
 
-
         val livro = request.toModel()
         repository.save(livro)
 
